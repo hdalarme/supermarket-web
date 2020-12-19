@@ -1,28 +1,27 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import SupermarketDataService from "../../services/supermarket.service";
+import ProductDataService from "../../services/product.service";
 
 
-export default class Supermarket extends Component {
+export default class Products extends Component {
   constructor(props) {
     super(props);
     this.onChangeSearchName = this.onChangeSearchName.bind(this);
-    this.retrieveSupermarkets = this.retrieveSupermarkets.bind(this);
+    this.retrieveProducts = this.retrieveProducts.bind(this);
     this.refreshList = this.refreshList.bind(this);
-    this.setActiveSupermarket = this.setActiveSupermarket.bind(this);
-    this.removeAllSupermarkets = this.removeAllSupermarkets.bind(this);
+    this.setActiveProduct = this.setActiveProduct.bind(this);
     this.searchName = this.searchName.bind(this);
 
     this.state = {
       supermarkets: [],
-      currentSupermarket: null,
+      currentProduct: null,
       currentIndex: -1,
       searchName: ""
     };
   }
 
   componentDidMount() {
-    this.retrieveSupermarkets();
+    this.retrieveProducts();
   }
 
   onChangeSearchName(e) {
@@ -33,11 +32,11 @@ export default class Supermarket extends Component {
     });
   }
 
-  retrieveSupermarkets() {
-    SupermarketDataService.getAll()
+  retrieveProducts() {
+    ProductDataService.getAll()
       .then(response => {
         this.setState({
-          supermarkets: response.data
+          products: response.data
         });
         console.log(response.data);
       })
@@ -47,36 +46,25 @@ export default class Supermarket extends Component {
   }
 
   refreshList() {
-    this.retrieveSupermarkets();
+    this.retrieveProducts();
     this.setState({
-      currentSupermarket: null,
+      currentProduct: null,
       currentIndex: -1
     });
   }
 
-  setActiveSupermarket(supermarket, index) {
+  setActiveProduct(product, index) {
     this.setState({
-      currentSupermarket: supermarket,
+      currentProduct: product,
       currentIndex: index
     });
   }
 
-  removeAllSupermarkets() {
-    SupermarketDataService.deleteAll()
-      .then(response => {
-        console.log(response.data);
-        this.refreshList();
-      })
-      .catch(e => {
-        console.log(e);
-      });
-  }
-
   searchName() {
-    SupermarketDataService.findByName(this.state.searchName)
+    ProductDataService.findByName(this.state.searchName)
       .then(response => {
         this.setState({
-          supermarkets: response.data
+          products: response.data
         });
         console.log(response.data);
       })
@@ -86,7 +74,7 @@ export default class Supermarket extends Component {
   }
 
   render() {
-    const { searchName, supermarkets, currentSupermarket, currentIndex } = this.state;
+    const { searchName, products, currentProduct, currentIndex } = this.state;
 
     return (
       <div className="list row">
@@ -111,81 +99,53 @@ export default class Supermarket extends Component {
           </div>
         </div>
         <div className="col-md-6">
-          <h4>Supermarket List</h4>
+          <h4>Products List</h4>
 
           <ul className="list-group">
-            {supermarkets &&
-              supermarkets.map((supermarket, index) => (
+            {products &&
+              products.map((product, index) => (
                 <li
                   className={
                     "list-group-item " +
                     (index === currentIndex ? "active" : "")
                   }
-                  onClick={() => this.setActiveSupermarket(supermarket, index)}
+                  onClick={() => this.setActiveProduct(product, index)}
                   key={index}
                 >
-                  {supermarket.name}
+                  {product.name}
                 </li>
               ))}
           </ul>
 
-          <button
-            className="m-3 btn btn-sm btn-danger"
-            onClick={this.removeAllSupermarketss}
-          >
-            Remove All
-          </button>
-
           <Link
-            to={"/supermarket-add/"} 
+            to={"/product-add/"} 
               className="m-3 btn btn-sm btn-success"
             >
             Adicionar
           </Link>
         </div>
         <div className="col-md-6">
-          {currentSupermarket ? (
+          {currentProduct ? (
             <div>
-              <h4>Supermarket</h4>
+              <h4>product</h4>
               <div>
                 <label>
                   <strong>Name:</strong>
                 </label>{" "}
-                {currentSupermarket.name}
+                {currentProduct.name}
               </div>
               <div>
                 <label>
-                  <strong>Address:</strong>
+                  <strong>UnidadeMedida:</strong>
                 </label>{" "}
-                {currentSupermarket.address}
+                {currentProduct.unidadeMedida}
               </div>
-              <div>
-                <label>
-                  <strong>District:</strong>
-                </label>{" "}
-                {currentSupermarket.district}
-              </div>
-              <div>
-                <label>
-                  <strong>City:</strong>
-                </label>{" "}
-                {currentSupermarket.city}
-              </div>
-              <div>
-                <label>
-                  <strong>State:</strong>
-                </label>{" "}
-                {currentSupermarket.state}
-              </div>
-              <div>
-                <label>
-                  <strong>Status:</strong>
-                </label>{" "}
-                {currentSupermarket.published ? "Published" : "Pending"}
-              </div>
+      
+   
+        
 
               <Link
-                to={"/supermarkets/" + currentSupermarket.id}
+                to={"/products/" + currentProduct.id}
                 className="m-3 btn btn-sm btn-warning" //badge badge-
               >
                 Edit
@@ -195,7 +155,7 @@ export default class Supermarket extends Component {
           ) : (
             <div>
               <br />
-              <p>Please click on a Supermarket...</p>
+              <p>Please click on a Product...</p>
             </div>
           )}
         </div>
