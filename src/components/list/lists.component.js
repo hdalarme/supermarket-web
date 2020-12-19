@@ -13,7 +13,7 @@ export default class List extends Component {
         this.refreshList = this.refreshList.bind(this);
         this.setActiveList = this.setActiveList.bind(this);
         this.removeAllLists = this.removeAllLists.bind(this);
-        this.searchTitle = this.searchTitle.bind(this);
+        this.searchName = this.searchName.bind(this);
     
         this.state = {
           tutorials: [],
@@ -74,8 +74,8 @@ export default class List extends Component {
           });
       }
 
-      searchTitle() {
-        ListDataService.findByTitle(this.state.searchTitle)
+      searchName() {
+        ListDataService.findByName(this.state.searchName)
           .then(response => {
             this.setState({
               lists: response.data
@@ -88,7 +88,7 @@ export default class List extends Component {
       }
 
       render() {
-        const { searchTitle, lists, currentList, currentIndex } = this.state;
+        const { searchName, lists, currentList, currentIndex } = this.state;
 
         return (
             <div className="list row">
@@ -97,15 +97,15 @@ export default class List extends Component {
                   <input
                     type="text"
                     className="form-control"
-                    placeholder="Search by title"
-                    value={searchTitle}
-                    onChange={this.onChangeSearchTitle}
+                    placeholder="Search by Name"
+                    value={searchName}
+                    onChange={this.onChangeSearchName}
                   />
                   <div className="input-group-append">
                     <button
                       className="btn btn-outline-secondary"
                       type="button"
-                      onClick={this.searchTitle}
+                      onClick={this.searchName}
                     >
                       Search
                     </button>
