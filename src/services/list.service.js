@@ -1,33 +1,30 @@
 import http from "./http-common";
 
-class ListDataService{
-    getAll() {
+    const getAll = () => {
         return http.get("/lists");
     }
 
-    get(id) {
+    const get = id => {
         return http.get(`/lists/${id}`);
     }
 
-    create(data) {
+    const create = data => {
         return http.post("/lists", data);
     }
 
-    update(id, data) {
+    const update = (id, data) => {
         return http.put(`/lists/${id}`, data);
     }
 
-    delete(id) {
+    const remove = id => {
         return http.delete(`/lists/${id}`);
     }
 
-    deleteAll() {
-        return http.delete(`/lists`);
-    }
 
-    findByTitle(title) {
-        return http.get(`/lists?title=${title}`);
-    }
+export default {
+    getAll,
+    get,
+    create,
+    update,
+    remove
 }
-
-export default new ListDataService();

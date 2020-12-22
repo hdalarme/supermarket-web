@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Switch, Route, Link } from "react-router-dom";
+import React from "react";
+import { Switch, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
@@ -20,8 +20,8 @@ import List from "./components/list/lists.component";
 import AddList from "./components/list/add-list.component";
 
 
-class App extends Component {
-  render() {
+function App() {
+
     return (
       <div>
         
@@ -42,14 +42,14 @@ class App extends Component {
             <Route path="/products/:id" component={Product} />
 
             <Route exact path={["/", "/lists"]} component={List} />
-            <Route exact path="/listadd" component={AddList} />
+            <Route exact path="/list-add" component={AddList} />
             <Route //path="/tutorials/:id" component={Tutorial} 
             />
           </Switch>
         </div>
       </div>
     );
-  }
+  
 }
 
 export default App;
