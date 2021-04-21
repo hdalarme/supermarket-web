@@ -1,7 +1,24 @@
 import React, {useState} from "react";
+
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
+import Icon from '@material-ui/core/Icon';
+import SaveIcon from '@material-ui/icons/Save';
+
 import ListDataService from "../../services/list.service";
 
+const useStyles = makeStyles((theme) => ({
+  button: {
+    margin: theme.spacing(1),
+  },
+  submit: {
+    margin: theme.spacing(1, 0, 2),
+  },
+}));
+
 const AddList = () => {
+  const classes = useStyles();
   const initialListState = {
     id: null,
     name: ""
@@ -44,28 +61,40 @@ const newList = () => {
       {submitted ? (
         <div>
           <h4>You submitted successfully!</h4>
-          <button className="btn btn-success" onClick={newList}>
-            add
-          </button>
+          <Button
+                type="submit"
+                fullWidth
+                onClick={newList}
+                variant="contained"
+                className={classes.submit}
+                endIcon={<Icon>send</Icon>}
+              >Nova Lista</Button>
         </div>
       ) : (
           <div className="form-group row">
-            <label htmlFor="name" className="col-sm-2 col-form-label">Name</label>
-            <div className="col-sm-8">
-              <input 
-                type="text"
-                className="form-control"
-                id="name"
+            <div className="col-sm-12">
+              <TextField 
                 required
+                fullWidth
+                id="name" 
+                label="Lista" 
+                variant="outlined" 
+                size="small"
                 value={list.name}
                 onChange={handleInputCharge}
                 name="name"
+                margin="normal"
               />
-            </div>
-            <div className="col-sm-2">
-            <button onClick={saveList} className="btn btn-success">
-            Submit
-          </button>
+            
+              <Button
+                type="submit"
+                fullWidth
+                onClick={saveList}
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                startIcon={<SaveIcon />}
+              >Salvar</Button>
             </div>
           </div>
       )}

@@ -38,6 +38,7 @@ const MenuTopo = (props) => {
                 Listas
                 </Link>
             </li>
+            
             <li className="nav-item">
                 <Link to={"/supermarkets"} className="nav-link">
                 Stores
@@ -55,29 +56,29 @@ const MenuTopo = (props) => {
               </Link>
             </li>
 
-            {/*showModeratorBoard && */(
+            {/*showModeratorBoard && (
               <li className="nav-item">
                 <Link to={"/mod"} className="nav-link">
                   Moderator Board
                 </Link>
               </li>
-            )}
+            )*/}
 
-            {/*showAdminBoard &&*/ (
+            {/*showAdminBoard && (
               <li className="nav-item">
                 <Link to={"/admin"} className="nav-link">
                   Admin Board
                 </Link>
               </li>
-            )}
+            )*/}
 
-            {/*currentUser &&*/ (
+            {/*currentUser && (
               <li className="nav-item">
                 <Link to={"/user"} className="nav-link">
                   User
                 </Link>
               </li>
-            )}
+            )*/}
           </div>
 
           

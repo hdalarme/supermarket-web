@@ -1,16 +1,30 @@
 import React, { useState, useEffect } from "react";
+
+import Container from '@material-ui/core/Container';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
+import SaveIcon from '@material-ui/icons/Save';
+
 import ListDataService from "../../services/list.service";
 
 import AddList from "./add-list.component";
 
+const useStyles = makeStyles((theme) => ({
+  button: {
+    margin: theme.spacing(1),
+  },
+}));
+
 const List = () => {
+  const classes = useStyles();
   const [lists, setLists] = useState([]);
   const [currentList, setCurrentList] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(-1);
 
   useEffect(() => {
     retrieveLists();
-  }, []);
+  }, [lists]);
 
   const retrieveLists = () => {
     ListDataService.getAll()
@@ -46,6 +60,7 @@ const List = () => {
   };
 
   return(
+    <Container component="main" maxWidth="xs">
     <div className="list row">
       <div className="col-md-10"> 
         <AddList />
@@ -91,6 +106,7 @@ const List = () => {
         )}
       </div>
     </div>
+    </Container>
   );
 
 };
