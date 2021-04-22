@@ -1,10 +1,19 @@
 import React, { useState, useEffect } from "react";
 
 import Container from '@material-ui/core/Container';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
-import SaveIcon from '@material-ui/icons/Save';
+import ListUI from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Avatar from '@material-ui/core/Avatar';
+import FolderIcon from '@material-ui/icons/Folder';
+import ListAltIcon from '@material-ui/icons/ListAlt';
+
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import ListDataService from "../../services/list.service";
 
@@ -15,6 +24,10 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
   },
 }));
+
+function ListItemLink(props) {
+  return <ListItem button component="a" {...props} />;
+}
 
 const List = () => {
   const classes = useStyles();
@@ -62,11 +75,36 @@ const List = () => {
   return(
     <Container component="main" maxWidth="xs">
     <div className="list row">
-      <div className="col-md-10"> 
+      <div className="col-md-12"> 
         <AddList />
       </div>
-      <div className="col-md-6">
+      <div className="col-md-12">
         <h4>Lists</h4>
+
+        <ListUI component="nav" aria-label="secondary mailbox folders">
+        {lists &&
+            lists.map((list, index) => (
+              <ListItem button 
+              key={index}
+              onClick={() => setActiveList(list, index)}
+              selected = {(index === currentIndex ? true : false)}
+              >
+                <ListItemAvatar>
+                  <Avatar>
+                    <ListAltIcon />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary={list.name} />
+                <ListItemSecondaryAction>
+                  <IconButton edge="end" aria-label="delete">
+                    <DeleteIcon 
+                    onClick={(e) => { if (window.confirm('Are you sure you wish to delete this item?')) deleteList(e) } }
+                    />
+                  </IconButton>
+                </ListItemSecondaryAction>
+              </ListItem>
+            ))}
+        </ListUI>
 
         <ul className="list-group">
           {lists &&
